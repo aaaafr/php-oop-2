@@ -13,71 +13,45 @@ $user->insertCreditCard($c); -->
 
 <?php
 
-class Product{
-    public $name;
-    public $desc;
-    public $price;
+require_once __DIR__ . '/classes/Product.php';
+require_once __DIR__ . '/classes/User.php';
+require_once __DIR__ . '/classes/PremiumUser.php';
+require_once __DIR__ . '/classes/CreditCard.php';
+require_once __DIR__ . '/database/db.php';
 
-    function __construct($name, $desc, $price)
-    {
-      $this->name = $name;
-      $this->desc = $desc;
-      $this->price = $price;
-    }
+
+
+
+//   var_dump($products);
+//   var_dump($users);
+
+  $card = new CreditCard(1234567, '12/2023', 123);
   
-}
-
-class Tech extends Product{
-    function __construct($name, $desc, $price, $type)
-    {
-        parent::__construct($name, $desc, $price);
-        $this->type = $type;
-    }
-
-    public function getType(){
-        return $this->type;
-    }
-
-}
-
-$computer = new Product('MacBook', 'Lorem ipusm dolor sit amet', 2000);
-// var_dump($computer);
-
-$ipad = new Tech('Ipad', 'Lorem ipsum', 600, 'Mini');
-var_dump($ipad);
-var_dump($ipad->getType());
+?>
 
 
-class User{
-    public $name;
-    public $desc;
-    function __construct($name, $age)
-    {
-        $this->name = $name;
-        $this->desc = $age;
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OOP 2</title>
+</head>
+<body>
+    <?php
+    foreach($products as $product) : ?>
+    <h1><?=$product->name();?></h1>
+    
+    <?php endforeach;?>
 
-
-    public function getDiscount($age){
-        if($age > 65){
-            return 'Ha diritto ad uno sconto del 10%';
-        }else{
-            return 'Prezzo pieno';
-        }
-    }
-}
-
-class Credit extends User{
-    function __construct($name, $age, $card)
-    {
-        parent::__construct($name, $age, $card);
-        $this->card = $card;
-    }
-}
-
-
-$c = new Credit('Abb', 90, 123456);
-var_dump($c);
-var_dump($c->getDiscount($age));
-
-
+    <?php
+    foreach($users as $user) :
+    if(method_exists($user, 'isPremium') && $user->isPremium()) : ?>
+        <h3><?= $user->name() ?></h3>
+        <p>Sei un utente Premium, hai diritto al <?php echo $user->discount()?> % di sconto</p>
+        <p><?= $user->insertCreditCard($card)?></p>
+    <?php endif; ?>
+    <?php endforeach;?>
+</body>
+</html>
