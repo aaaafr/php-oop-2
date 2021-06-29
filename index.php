@@ -20,8 +20,6 @@ require_once __DIR__ . '/classes/CreditCard.php';
 require_once __DIR__ . '/database/db.php';
 
 
-
-
 //   var_dump($products);
 //   var_dump($users);
 
